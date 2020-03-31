@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "prestart": "npm run build:prod",
     "start:dev": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "webpack -p",
+    "build": "cross-env NODE_ENV=production webpack -p",
     "build:prod": "npm run clean && npm run build",
     "clean": "rimraf build",
-    "dev": "npm run start:dev"
+    "dev": "npm run start:dev",
+    "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -19,9 +19,7 @@
     "angular": "^1.7.3",
     "express": "^4.17.1",
     "path": "^0.12.7",
-    "webpack-cli": "^3.1.0",
-    "rimraf": "^2.6.2",
-    "webpack": "^4.17.2"
+    "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -45,9 +43,11 @@
     "null-loader": "^0.1.1",
     "postcss-loader": "3.0.0",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.17.2",
     "webpack-dev-server": "^3.1.8"
   }
 }
