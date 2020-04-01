@@ -49,6 +49,22 @@ const rules = [
         options: { sourceMap: true }
       }
     ]
+  },
+  {
+    test: /\.css$/,
+    use: [
+      {
+        loader: 'style-loader',
+      },
+      {
+        loader: 'css-loader',
+        options: { url: false }
+      },
+      {
+        loader: 'sass-loader',
+        options: { sourceMap: true }
+      }
+    ]
   }
 ];
 
