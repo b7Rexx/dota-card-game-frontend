@@ -15,7 +15,7 @@ class HeroServiceFunc {
   }
 
   getData() {
-    return this.apiService.getAllWithToken(this.API_URL + '/heroes');
+    return this.apiService.request('GET',this.API_URL + '/heroes');
   }
 
   cbEdit(item) {

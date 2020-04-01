@@ -5,9 +5,26 @@ class ApiServiceFunc {
     this.authToken = authToken;
   }
 
-  getAll(url) {
+  request(method, url, params = {}) {
+    return this.httpByMethod(method, url, false, params);
+  }
+
+  requestWithToken(method, url) {
+    return this.httpByMethod(method, url, true, params);
+  }
+
+  httpByMethod(method, url, token = false, params = {}) {
+    var httpOptions = {
+      method: method,
+      url: url,
+      data: params
+    };
+    if (token)
+      httpOptions.headers = {
+        Token: this.authToken
+      };
     return new Promise((res, rej) => {
-      this.$http.get(url)
+      this.$http(httpOptions)
         .then(
           result => {
             res(result);
@@ -17,32 +34,6 @@ class ApiServiceFunc {
           })
     });
   }
-
-  getAllWithToken(url) {
-    return new Promise((res, rej) => {
-      this.$http({
-        method: 'GET',
-        url: url,
-        headers: {
-          Token: this.authToken
-        }
-      })
-        .then(
-          result => {
-            res(result);
-          },
-          err => {
-            rej(err);
-          })
-    });
-  }
-
-
-
-  cbEdit(item) {
-    console.log('edit', item);
-  }
-
 }
 
 const ApiService = {

@@ -15,7 +15,7 @@ class UserServiceFunc {
   }
 
   getData() {
-    return this.apiService.getAll(this.API_URL + '/users');
+    return this.apiService.requestWithToken('GET', this.API_URL + '/users');
   }
 
   cbEdit(item) {
