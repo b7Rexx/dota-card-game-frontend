@@ -15,12 +15,15 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@babel/runtime-corejs2": "^7.0.0",
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@uirouter/angularjs": "^1.0.20",
     "angular": "^1.7.3",
     "angular-animate": "^1.7.9",
     "angular-touch": "^1.7.9",
     "angular-ui-bootstrap": "^2.5.6",
     "bootstrap": "^3.3.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "path": "^0.12.7",
     "webpack-cli": "^3.1.0"

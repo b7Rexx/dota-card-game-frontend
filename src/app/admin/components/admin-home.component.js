@@ -9,7 +9,6 @@ class AdminHomeController {
 
 const AdminHomeComponent = {
   selector: 'adminHomeComponent',
-  route: 'admin',
   controller: AdminHomeController,
   template: require('../template/admin-home.template.html')
 };
