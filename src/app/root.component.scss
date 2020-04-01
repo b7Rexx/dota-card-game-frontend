@@ -8,3 +8,10 @@
     --bg-primary--: white;
     --bg-secondary--: whitesmoke;
 }
+
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+    cursor: pointer;
+}
