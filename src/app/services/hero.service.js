@@ -5,6 +5,7 @@ class HeroServiceFunc {
     this.apiService = apiService;
   }
 
+  
   getDefn() {
     return [
       { thead: 'SN', tbody: 'id', type: 'string' },
