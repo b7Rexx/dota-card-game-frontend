@@ -5,24 +5,40 @@ class HeroServiceFunc {
     this.apiService = apiService;
   }
 
-  
-  getDefn() {
-    return [
-      { thead: 'SN', tbody: 'id', type: 'string' },
-      { thead: 'Name', tbody: 'name', type: 'string' },
-      { thead: 'Status', tbody: 'status', type: 'status' },
-      { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit },
-    ];
-  }
-
   getData() {
-    return this.apiService.request('GET',this.API_URL + '/heroes');
+    return this.apiService.request('GET', this.API_URL + '/heroes');
   }
 
-  cbEdit(item) {
-    console.log('edit', item);
+  /**
+   * 
+   * @param {string} name 
+   * @param {number} hero_type_id 
+   */
+  create(name, hero_type_id) {
+    return this.apiService.requestWithToken('POST', this.API_URL + '/heroes', {
+      name: name, hero_type_id: hero_type_id
+    });
   }
 
+  /**
+   * 
+   * @param {number} id 
+   * @param {string} name 
+   * @param {number} hero_type_id 
+   */
+  edit(id, name, hero_type_id) {
+    return this.apiService.requestWithToken('PUT', this.API_URL + '/heroes/' + id, {
+      name: name, hero_type_id: hero_type_id
+    });
+  }
+
+  /**
+   * 
+   * @param {number} id 
+   */
+  remove(id) {
+    return this.apiService.requestWithToken('DELETE', this.API_URL + '/heroes/' + id);
+  }
 }
 
 const HeroService = {

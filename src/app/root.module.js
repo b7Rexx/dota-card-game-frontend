@@ -8,7 +8,7 @@ if (window) {
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
-import { requireAuthentication, redirectAuthenticated } from './services/auth.service';
+import Swal from 'sweetalert2'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome';
@@ -18,6 +18,7 @@ import './root.component.scss';
 angular
   .module('root', [uiRouter, uiBootstrap,])
   .constant('API_URL', env.API_URL)
+  .constant('Swal', Swal)
 
   .run(function ($state, $transitions, authService) {
     $transitions.onStart({}, function (transition) {
@@ -39,6 +40,7 @@ angular
   .component(HeroComponent.selector, HeroComponent)
   .component(UserComponent.selector, UserComponent)
   .component(ListComponent.selector, ListComponent)
+  .component(ModalComponent.selector, ModalComponent)
 
   .component(LoginComponent.selector, LoginComponent)
 
@@ -69,6 +71,7 @@ import AdminHomeComponent from './admin/components/admin-home.component';
 import HeroComponent from './admin/components/hero.component';
 import UserComponent from './admin/components/user.component';
 import ListComponent from './admin/components/list.component';
+import ModalComponent from './admin/components/modal.component';
 
 import LoginComponent from './auth/components/login.component';
 

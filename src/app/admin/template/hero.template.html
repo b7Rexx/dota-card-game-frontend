@@ -1,2 +1,14 @@
 <h4><i class="fa fa-user-shield"></i> Heroes</h4>
-<list-component table-defn='$ctrl.tableDefn' table-data="$ctrl.tableData"></list-component>
+<div>
+  <list-component list-defn='$ctrl.listDefn' table-data="$ctrl.tableData"></list-component>
+  <div class="row">
+    <div class="col-sm-6">
+      <button class="btn btn-sm btn-info" ng-click="$ctrl.openAddModal()">
+        <i class="fa fa-plus"></i>
+        Add {{$ctrl.listDefn.title}}
+      </button>
+    </div>
+  </div>
+  <modal-component modal-title="$ctrl.modalTitle" modal-content="$ctrl.modalContent" modal-open="$ctrl.modalOpen"
+    modal-action="$ctrl.modalAction" modal-save="$ctrl.modalSave(action,cb)"></modal-component>
+</div>

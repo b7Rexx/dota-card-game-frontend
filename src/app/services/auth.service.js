@@ -1,8 +1,8 @@
 class AuthServiceFunc {
   constructor() {
     'ngInject';
-    this.authToken = null;//session variable for token
-    this.authExpire = null;//session variable for expire time
+    this.authToken = localStorage.getItem('authToken');//session variable for token
+    this.authExpire = localStorage.getItem('authExpire');//session variable for expire time
   }
 
   /**
@@ -10,7 +10,6 @@ class AuthServiceFunc {
    * @returns {boolean}
    */
   isAuthenticated() {
-    console.log(this.authToken, '  > < ', this.authExpire)
     if (this.authToken)
       if (new Date() <= new Date(this.authExpire))
         return true;
@@ -25,6 +24,8 @@ class AuthServiceFunc {
   setAuth(token, expire) {
     this.authToken = token;
     this.authExpire = expire;
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('authExpire', expire);
   }
 
   /**
@@ -41,6 +42,8 @@ class AuthServiceFunc {
   destroyAuth() {
     this.authToken = null;
     this.authExpire = null;
+    localStorage.setItem('authToken', null);
+    localStorage.setItem('authExpire', null);
   };
 }
 
