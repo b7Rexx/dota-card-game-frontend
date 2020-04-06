@@ -1,16 +1,24 @@
 class HeroController {
-  constructor($scope, Swal, heroService) {
+  constructor($scope, heroService, heroTypeService, swalService) {
     'ngInject';
     this.$scope = $scope;
-    this.Swal = Swal;
     this.heroService = heroService;
+    this.swalService = swalService;
 
+    //get formatted hero types from hero services api
+    heroTypeService.getFormattedHeroType().then(result => {
+      this.heroType = result;
+      this.init();
+    });
+  }
+
+  init() {
     this.listDefn = {
       title: 'Hero',
       tableDefn: [
         { thead: 'SN', tbody: 'id', type: 'string' },
         { thead: 'Name', tbody: 'name', type: 'string' },
-        { thead: 'Hero Type', tbody: 'hero_type_id', type: 'string' },
+        { thead: 'Hero Type', tbody: 'hero_type_id', type: 'select', option: this.heroType },
         { thead: 'Status', tbody: 'status', type: 'status' },
         { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
         { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
@@ -37,32 +45,23 @@ class HeroController {
 
   cbDelete(item) {
     var that = this;
-    this.Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this data set!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.value) {
-        that.heroService.remove(item.id).then(() => {
-          that.Swal.fire(
-            'Deleted!',
-            'Your data set has been deleted.',
-            'success'
-          );
-          that.getHeroData();
-        })
-          .catch(() => {
-            this.Swal.fire(
-              'Cancelled',
-              'Something went wrong!',
-              'error'
-            )
-          });
-      }
-    });
+    this.swalService.confirmWithSwal()
+      .then((result) => {
+        if (result.value) {
+          that.heroService.remove(item.id)
+            .then(() => {
+              that.swalService.alertWithSwal(true);
+              that.getHeroData();
+            })
+            .catch(() => {
+              that.swalService.alertWithSwal(
+                false,
+                'Cancelled',
+                'Something went wrong!',
+              );
+            });
+        }
+      });
   }
 
   /**
@@ -76,12 +75,11 @@ class HeroController {
       this.modalTitle = 'Edit Hero';
       this.modalAction = "edit";
     }
-    var heroType = [{ 'name': 'Strength', 'value': 1 }, { 'name': 'Agility', 'value': 2 }, { 'name': 'Intelligence', 'value': 3 }];
 
     this.modalContent = {
       'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId },
       'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name },
-      'hero_type_id': { 'name': 'hero_type_id', 'label': 'Hero type', 'type': 'select', option: heroType, 'value': hero_type_id },
+      'hero_type_id': { 'name': 'hero_type_id', 'label': 'Hero type', 'type': 'select', option: this.heroType, 'value': hero_type_id },
     };
   }
 

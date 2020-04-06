@@ -1,9 +1,9 @@
 class UserController {
-  constructor(userService, $scope, Swal) {
+  constructor(userService, $scope, swalService) {
     'ngInject';
     this.$scope = $scope;
-    this.Swal = Swal;
     this.userService = userService;
+    this.swalService = swalService;
 
     this.listDefn = {
       title: 'Users',
@@ -37,32 +37,23 @@ class UserController {
 
   cbDelete(item) {
     var that = this;
-    this.Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this data set!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.value) {
-        that.userService.remove(item.id).then(() => {
-          that.Swal.fire(
-            'Deleted!',
-            'Your data set has been deleted.',
-            'success'
-          );
-          that.getUserData();
-        })
-          .catch(() => {
-            this.Swal.fire(
-              'Cancelled',
-              'Something went wrong!',
-              'error'
-            )
-          });
-      }
-    });
+    this.swalService.confirmWithSwal()
+      .then((result) => {
+        if (result.value) {
+          that.userService.remove(item.id)
+            .then(() => {
+              that.swalService.alertWithSwal(true);
+              that.getUserData();
+            })
+            .catch(() => {
+              that.swalService.alertWithSwal(
+                false,
+                'Cancelled',
+                'Something went wrong!',
+              );
+            });
+        }
+      });
   }
 
 

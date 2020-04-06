@@ -47,9 +47,14 @@ angular
 
   //services
   .service(HeroService.selector, HeroService.service)
+  .service(HeroTypeService.selector, HeroTypeService.service)
   .service(UserService.selector, UserService.service)
   .service(ApiService.selector, ApiService.service)
   .service(AuthService.selector, AuthService.service)
+  .service(SwalService.selector, SwalService.service)
+
+  //filters
+  .filter(OptionFilter.selector, OptionFilter.filter)
 
   // routes
   .config(($stateProvider, $locationProvider, $urlRouterProvider) => {
@@ -76,6 +81,10 @@ import ModalComponent from './admin/components/modal.component';
 import LoginComponent from './auth/components/login.component';
 
 import HeroService from "./services/hero.service";
+import HeroTypeService from "./services/hero_type.service";
 import UserService from "./services/user.service";
 import ApiService from "./services/api.service";
 import AuthService from "./services/auth.service";
+import SwalService from "./services/swal.service";
+
+import OptionFilter from "./filters/option.filter";

@@ -29,12 +29,18 @@
             <button class="btn btn-sm" ng-if="col.type === 'button'" ng-click="col.action(row)">
               <i ng-class="col.icon" ng-if='col.icon'></i>{{col.tbody}}
             </button>
+
             <span ng-if="col.type === 'string'">
               {{col.tbody?(row[col.tbody]||''):''}}
             </span>
+
             <span ng-if="col.type === 'status'">
               <i class="fa fa-check text-success" ng-if="row[col.tbody]"></i>
               <i class="fa fa-times text-danger" ng-if="!row[col.tbody]"></i>
+            </span>
+
+            <span ng-if="col.type==='select'">
+              {{row[col.tbody] | optionFilter:col.option}}
             </span>
           </td>
         </tr>
