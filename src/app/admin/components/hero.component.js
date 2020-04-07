@@ -25,6 +25,7 @@ class HeroController {
         { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
       ]
     };
+    this.$scope.$apply();
   }
 
   $onInit() {

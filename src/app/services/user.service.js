@@ -17,7 +17,7 @@ class UserServiceFunc {
  * @param {string} password 
  */
   create(name, email, password) {
-    return this.apiService.requestWithToken('POST', this.API_URL + '/users', {
+    return this.apiService.request('POST', this.API_URL + '/users', {
       name: name, email: email, password: password
     });
   }

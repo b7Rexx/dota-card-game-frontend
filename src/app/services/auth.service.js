@@ -1,8 +1,8 @@
 class AuthServiceFunc {
   constructor() {
     'ngInject';
-    // this.authToken = localStorage.getItem('authToken');//session variable for token
-    // this.authExpire = localStorage.getItem('authExpire');//session variable for expire time
+    this.authToken = localStorage.getItem('authToken');//session variable for token
+    this.authExpire = localStorage.getItem('authExpire');//session variable for expire time
   }
 
   /**
