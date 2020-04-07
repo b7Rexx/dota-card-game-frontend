@@ -42,7 +42,9 @@ angular
   .component(ListComponent.selector, ListComponent)
   .component(ModalComponent.selector, ModalComponent)
 
+  .component(HomeComponent.selector, HomeComponent)
   .component(LoginComponent.selector, LoginComponent)
+  .component(RegisterComponent.selector, RegisterComponent)
 
 
   //services
@@ -65,7 +67,9 @@ angular
       .state('heroes', { authenticate: 'requireAuth', name: 'admin.heroes', url: '/heroes', component: HeroComponent.selector, parent: 'admin' })
       .state('users', { authenticate: 'requireAuth', name: 'admin.users', url: '/users', component: UserComponent.selector, parent: 'admin' })
 
-      .state('login', { authenticate: 'redirectIfAuth', name: 'login', url: '/login', component: LoginComponent.selector })
+      .state('home', { authenticate: false, name: 'home', url: '', component: HomeComponent.selector })
+      .state('login', { authenticate: 'redirectIfAuth', name: 'login', url: '/login', component: LoginComponent.selector, parent: 'home' })
+      .state('register', { authenticate: 'redirectIfAuth', name: 'register', url: '/register', component: RegisterComponent.selector, parent: 'home' })
       ;
 
     $locationProvider.hashPrefix('');
@@ -79,7 +83,9 @@ import UserComponent from './admin/components/user.component';
 import ListComponent from './admin/components/list.component';
 import ModalComponent from './admin/components/modal.component';
 
+import HomeComponent from './auth/components/home.component';
 import LoginComponent from './auth/components/login.component';
+import RegisterComponent from './auth/components/register.component';
 
 import HeroService from "./services/hero.service";
 import HeroTypeService from "./services/hero_type.service";

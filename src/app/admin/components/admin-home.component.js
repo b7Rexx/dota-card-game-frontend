@@ -2,8 +2,15 @@
  * Admin Home Layout  
  */
 class AdminHomeController {
-  constructor() {
+  constructor(authService, $state) {
     'ngInject';
+    this.$state = $state;
+    this.authService = authService;
+  }
+
+  logout() {
+    this.authService.destroyAuth();
+    this.$state.transitionTo("login");
   }
 }
 

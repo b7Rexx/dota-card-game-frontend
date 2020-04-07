@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 .error-message {
     font-size: 12px;
     color: #ff9494;

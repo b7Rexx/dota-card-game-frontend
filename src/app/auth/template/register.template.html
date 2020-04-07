@@ -1,0 +1,28 @@
+<br>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="register-component">
+      <form ng-submit="$ctrl.submitAction()">
+        <div class="form-group">
+          <label for="register-name"><i class="fa fa-user"></i> Name</label>
+          <input type="text" class="form-control" id="register-name" ng-model="$ctrl.name"
+            ng-change="$ctrl.nameChangeHandler()">
+        </div>
+        <div class="form-group">
+          <label for="register-email"><i class="fa fa-envelope"></i> Email</label>
+          <input type="text" class="form-control" id="register-email" ng-model="$ctrl.email"
+            ng-change="$ctrl.emailChangeHandler()">
+        </div>
+        <div class="form-group">
+          <label for="register-password"><i class="fa fa-key"></i> Password</label>
+          <input type="password" class="form-control" ng-model="$ctrl.password"
+            ng-change="$ctrl.passwordChangeHandler()">
+        </div>
+        <div class="error-message text-center">{{$ctrl.registerError}}</span>
+          <div class="form-group">
+            <input type="submit" class="form-control" ng-model="$ctrl.registerBtn" ng-disabled="$ctrl.requiredInput">
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
