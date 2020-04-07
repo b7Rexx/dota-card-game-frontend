@@ -54,8 +54,11 @@ class LoginController {
       that.email = '';
       that.password = '';
       that.submitValidation();
-      that.authService.setAuth(result.data.token, result.data.expire_at)
-      that.$state.go('admin');
+      that.authService.setAuth(result.data.token, result.data.expire_at, result.data.user, result.data.isAdmin)
+      if (result.data.isAdmin)
+        that.$state.go('admin');
+      else
+        that.$state.go('home');
     }).catch((err) => {
       that.submitValidation();
       var errors = that.errMessageService.parseError(err.data.error);

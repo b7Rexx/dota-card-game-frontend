@@ -13,9 +13,19 @@
       <!-- <li><a ui-sref="#">Record</a></li> -->
     </ul>
 
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" ng-show="!$ctrl.auth">
       <li><a ui-sref="login">Login</a></li>
       <li><a ui-sref="register">Sign up</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.auth">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">Profile <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a ng-click="$ctrl.logout()"> <i class="fa fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 

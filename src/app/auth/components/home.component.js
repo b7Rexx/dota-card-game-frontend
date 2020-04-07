@@ -1,10 +1,19 @@
 /**
- * Admin Home Layout  
+ * User Home Layout  
  */
 class HomeController {
-  constructor() {
+  constructor(authService, $state) {
     'ngInject';
+    this.$state = $state;
+    this.authService = authService;
+    this.auth = authService.isAuthenticated();
   }
+
+  logout() {
+    this.authService.destroyAuth();
+    this.$state.transitionTo("login");
+  }
+
 }
 
 const HomeComponent = {

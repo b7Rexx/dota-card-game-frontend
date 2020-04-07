@@ -20,17 +20,36 @@ angular
   .constant('API_URL', env.API_URL)
   .constant('Swal', Swal)
 
-  .run(function ($state, $transitions, authService) {
+  .run(function ($state, $transitions, authService, $timeout) {
     $transitions.onStart({}, function (transition) {
-      if (transition.to().authenticate === 'redirectIfAuth') {
-        if (authService.isAuthenticated()) {
-          $state.transitionTo("admin");
-        }
-      }
-      if (transition.to().authenticate === 'requireAuth') {
-        if (!authService.isAuthenticated()) {
-          $state.transitionTo("login");
-        }
+
+      switch (transition.to().authenticate) {
+        case 'redirectIfAuth':
+          if (authService.isAuthenticated()) {
+            $timeout(function () {
+              $state.go('home')
+            })
+            // $state.target("home");
+          }
+          break;
+        case 'requireAuth':
+          if (!authService.isAuthenticated()) {
+            $timeout(function () {
+              $state.go('login')
+            })
+            // $state.target("login");
+          } else {
+            if (transition.to().isAdmin === true) {
+              if (!authService.isAdminAuthenticated())
+                $timeout(function () {
+                  $state.go('home')
+                })
+              // $state.target("home");
+            }
+          }
+          break;
+        default:
+          break;
       }
     });
   })
@@ -63,18 +82,36 @@ angular
   .config(($stateProvider, $locationProvider, $urlRouterProvider) => {
     'ngInject';
     $stateProvider
-      .state('admin', { authenticate: 'requireAuth', name: 'admin', url: '/admin', component: AdminHomeComponent.selector })
-      .state('heroes', { authenticate: 'requireAuth', name: 'admin.heroes', url: '/heroes', component: HeroComponent.selector, parent: 'admin' })
-      .state('users', { authenticate: 'requireAuth', name: 'admin.users', url: '/users', component: UserComponent.selector, parent: 'admin' })
+      .state('admin', {
+        authenticate: 'requireAuth', isAdmin: true,
+        name: 'admin', url: '/admin', component: AdminHomeComponent.selector
+      })
+      .state('heroes', {
+        authenticate: 'requireAuth', isAdmin: true,
+        name: 'admin.heroes', url: '/heroes', component: HeroComponent.selector, parent: 'admin'
+      })
+      .state('users', {
+        authenticate: 'requireAuth', isAdmin: true,
+        name: 'admin.users', url: '/users', component: UserComponent.selector, parent: 'admin'
+      })
 
-      .state('home', { authenticate: false, name: 'home', url: '', component: HomeComponent.selector })
-      .state('login', { authenticate: 'redirectIfAuth', name: 'login', url: '/login', component: LoginComponent.selector, parent: 'home' })
-      .state('register', { authenticate: 'redirectIfAuth', name: 'register', url: '/register', component: RegisterComponent.selector, parent: 'home' })
+      .state('home', {
+        authenticate: false, isAdmin: false,
+        name: 'home', url: '/home', component: HomeComponent.selector
+      })
+      .state('login', {
+        authenticate: 'redirectIfAuth',
+        name: 'home.login', url: '/login', component: LoginComponent.selector, parent: 'home'
+      })
+      .state('register', {
+        authenticate: 'redirectIfAuth',
+        name: 'home.register', url: '/register', component: RegisterComponent.selector, parent: 'home'
+      })
       ;
 
     $locationProvider.hashPrefix('');
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/admin');
+    $urlRouterProvider.otherwise('/home');
   });
 
 import AdminHomeComponent from './admin/components/admin-home.component';
