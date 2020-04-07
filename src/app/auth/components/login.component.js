@@ -1,10 +1,11 @@
 class LoginController {
-  constructor($scope, $state, apiService, authService, API_URL) {
+  constructor($scope, $state, apiService, authService, API_URL, errMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.$state = $state;
     this.apiService = apiService;
     this.authService = authService;
+    this.errMessageService = errMessageService;
     this.API_URL = API_URL;
   }
 
@@ -57,7 +58,9 @@ class LoginController {
       that.$state.go('admin');
     }).catch((err) => {
       that.submitValidation();
-      this.loginBtn = 'Login';
+      var errors = that.errMessageService.parseError(err.data.error);
+      that.loginError = 'Login failed | ' + errors.message;
+      that.loginBtn = 'Login';
       that.$scope.$apply();
     });
   }

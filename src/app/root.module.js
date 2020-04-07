@@ -52,6 +52,7 @@ angular
   .service(ApiService.selector, ApiService.service)
   .service(AuthService.selector, AuthService.service)
   .service(SwalService.selector, SwalService.service)
+  .service(ErrMessageService.selector, ErrMessageService.service)
 
   //filters
   .filter(OptionFilter.selector, OptionFilter.filter)
@@ -86,5 +87,6 @@ import UserService from "./services/user.service";
 import ApiService from "./services/api.service";
 import AuthService from "./services/auth.service";
 import SwalService from "./services/swal.service";
+import ErrMessageService from "./services/err_message.service";
 
 import OptionFilter from "./filters/option.filter";

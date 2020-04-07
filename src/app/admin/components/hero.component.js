@@ -1,9 +1,10 @@
 class HeroController {
-  constructor($scope, heroService, heroTypeService, swalService) {
+  constructor($scope, heroService, heroTypeService, swalService, errMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.heroService = heroService;
     this.swalService = swalService;
+    this.errMessageService = errMessageService;
 
     //get formatted hero types from hero services api
     heroTypeService.getFormattedHeroType().then(result => {
@@ -77,9 +78,9 @@ class HeroController {
     }
 
     this.modalContent = {
-      'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId },
-      'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name },
-      'hero_type_id': { 'name': 'hero_type_id', 'label': 'Hero type', 'type': 'select', option: this.heroType, 'value': hero_type_id },
+      'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId, 'error': '' },
+      'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name, 'error': '' },
+      'hero_type_id': { 'name': 'hero_type_id', 'label': 'Hero type', 'type': 'select', option: this.heroType, 'value': hero_type_id, 'error': '' },
     };
   }
 
@@ -90,7 +91,10 @@ class HeroController {
         this.heroService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.hero_type_id.value).then(() => {
           cb(true);
           that.getHeroData();
-        }).catch(() => {
+        }).catch((err) => {
+          var errors = this.errMessageService.parseError(err.data.error);
+          this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+          this.modalContent.name.error = errors.validations.name;
           cb(false);
         });
         break;
@@ -98,7 +102,10 @@ class HeroController {
         this.heroService.create(this.modalContent.name.value, this.modalContent.hero_type_id.value).then(() => {
           cb(true);
           that.getHeroData();
-        }).catch(() => {
+        }).catch((err) => {
+          var errors = this.errMessageService.parseError(err.data.error);
+          this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+          this.modalContent.name.error = errors.validations.name;
           cb(false);
         });
         break;

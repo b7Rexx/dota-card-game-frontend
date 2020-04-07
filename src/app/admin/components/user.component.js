@@ -1,9 +1,10 @@
 class UserController {
-  constructor(userService, $scope, swalService) {
+  constructor(userService, $scope, swalService, errMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.userService = userService;
     this.swalService = swalService;
+    this.errMessageService = errMessageService;
 
     this.listDefn = {
       title: 'Users',
@@ -28,7 +29,9 @@ class UserController {
       this.tableData = result.data.data.model;
       this.$scope.$apply();
     }).catch(err => {
-      console.log(err);
+      var errors = this.errMessageService.parseError(err.data.error);
+      this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+      this.modalContent.name.error = errors.validations.name;
     });
   }
   cbEdit(item) {
@@ -67,16 +70,16 @@ class UserController {
     this.modalAction = "add";
 
     this.modalContent = {
-      'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId },
-      'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name },
-      'email': { 'name': 'email', 'label': 'Email', 'type': 'email', 'value': email },
+      'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId, 'error': '' },
+      'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name, 'error': '' },
+      'email': { 'name': 'email', 'label': 'Email', 'type': 'email', 'value': email, 'error': '' },
     };
 
     if (editId !== null) {
       this.modalTitle = 'Edit User';
       this.modalAction = "edit";
     } else
-      this.modalContent.password = { 'name': 'password', 'label': 'Password', 'type': 'password', 'value': password };
+      this.modalContent.password = { 'name': 'password', 'label': 'Password', 'type': 'password', 'value': password, 'error': '' };
 
   }
 
@@ -88,7 +91,10 @@ class UserController {
           .then(() => {
             cb(true);
             that.getUserData();
-          }).catch(() => {
+          }).catch((err) => {
+            var errors = this.errMessageService.parseError(err.data.error);
+            this.modalContent.name.error = errors.validations.name;
+            this.modalContent.email.error = errors.validations.email;
             cb(false);
           });
         break;
@@ -96,7 +102,11 @@ class UserController {
         this.userService.create(this.modalContent.name.value, this.modalContent.email.value, this.modalContent.password.value).then(() => {
           cb(true);
           that.getUserData();
-        }).catch(() => {
+        }).catch((err) => {
+          var errors = this.errMessageService.parseError(err.data.error);
+          this.modalContent.name.error = errors.validations.name;
+          this.modalContent.email.error = errors.validations.email;
+          this.modalContent.password.error = errors.validations.password;
           cb(false);
         });
         break;
