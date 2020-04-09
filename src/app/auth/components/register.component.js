@@ -1,19 +1,26 @@
-class LoginController {
-  constructor($scope, $state, apiService, authService, API_URL, errMessageService) {
+class RegisterController {
+  constructor($scope, $state, apiService,  API_URL, errMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.$state = $state;
     this.apiService = apiService;
-    this.authService = authService;
     this.errMessageService = errMessageService;
     this.API_URL = API_URL;
   }
 
   $onInit() {
+    this.name = '';
     this.email = '';
     this.password = '';
-    this.loginBtn = 'Login';
+    this.registerBtn = 'Register';
     this.requiredInput = true;
+  }
+
+  /**
+   * Email input change handle/validation
+   */
+  nameChangeHandler() {
+    this.submitValidation();
   }
 
   /**
@@ -34,45 +41,43 @@ class LoginController {
    * Submit button toggle on validation
    */
   submitValidation() {
-    if (this.email && this.password)
+    if (this.name && this.email && this.password)
       this.requiredInput = false;
     else
       this.requiredInput = true;
   }
 
   /**
-   * Login click handler
+   * register click handler
    */
   submitAction() {
     var that = this;
     this.requiredInput = true;
-    this.loginBtn = 'Processing';
-    this.apiService.request('POST', this.API_URL + '/auth/login', {
+    this.registerBtn = 'Processing';
+    this.apiService.request('POST', this.API_URL + '/users', {
+      name: this.name,
       email: this.email,
       password: this.password
     }).then((result) => {
+      that.name = '';
       that.email = '';
       that.password = '';
       that.submitValidation();
-      that.authService.setAuth(result.data.token, result.data.expire_at, result.data.user, result.data.isAdmin)
-      if (result.data.isAdmin)
-        that.$state.go('admin');
-      else
-        that.$state.go('home');
+      that.$state.go('login');
     }).catch((err) => {
       that.submitValidation();
       var errors = that.errMessageService.parseError(err.data.error);
-      that.loginError = 'Login failed | ' + errors.message;
-      that.loginBtn = 'Login';
+      that.registerError = 'Register failed | ' + errors.message;
+      that.registerBtn = 'Register';
       that.$scope.$apply();
     });
   }
 }
 
-const LoginComponent = {
-  selector: 'loginComponent',
-  controller: LoginController,
-  template: require('../template/login.template.html')
+const RegisterComponent = {
+  selector: 'registerComponent',
+  controller: RegisterController,
+  template: require('../template/register.template.html')
 };
 
-export default LoginComponent;
+export default RegisterComponent;

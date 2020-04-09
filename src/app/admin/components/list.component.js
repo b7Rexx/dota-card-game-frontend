@@ -1,6 +1,8 @@
 /**
- *Table definition example 
-  *this.tableDefn = [
+ *List definition example 
+  *this.listDefn ={
+  title: 'list title',
+  tableDefn: [
   {
     thead: 'SN', //table head name
     tbody: 'id', //table body api key for type string | name for type button
@@ -8,19 +10,21 @@
     icon: 'fa fa-edit', //font awesome icon when type button
     action: null // null or callback function
   },
-];
+]}
  */
 
 class HeroController {
   constructor() {
     'ngInject';
-
     //default table definition
-    this.tableDefn = [
-      { thead: 'SN', tbody: 'id', type: 'string', action: null },
-      { thead: 'Name', tbody: 'name', type: 'string', action: null },
-      // { thead: 'Action', icon: 'fa fa-edit', type: 'button', action: this.cbFunc },
-    ];
+    this.listDefn = {
+      title: 'list title',
+      tableDefn: [
+        { thead: 'SN', tbody: 'id', type: 'string', action: null },
+        { thead: 'Name', tbody: 'name', type: 'string', action: null },
+        // { thead: 'Action', icon: 'fa fa-edit', type: 'button', action: this.cbFunc },
+      ]
+    };
   }
 }
 
@@ -29,7 +33,7 @@ const HeroComponent = {
   controller: HeroController,
   template: require('../template/list.template.html'),
   bindings: {
-    tableDefn: '<',
+    listDefn: '<',
     tableData: '<'
   }
 };

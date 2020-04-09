@@ -5,23 +5,43 @@ class UserServiceFunc {
     this.apiService = apiService;
   }
 
-  getDefn() {
-    return [
-      { thead: 'SN', tbody: 'id', type: 'string' },
-      { thead: 'Name', tbody: 'name', type: 'string' },
-      { thead: 'Status', tbody: 'status', type: 'status' },
-      { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit },
-    ];
-  }
 
   getData() {
     return this.apiService.requestWithToken('GET', this.API_URL + '/users');
   }
 
-  cbEdit(item) {
-    console.log('edit', item);
+  /**
+ * 
+ * @param {string} name 
+ * @param {number} email 
+ * @param {string} password 
+ */
+  create(name, email, password) {
+    return this.apiService.request('POST', this.API_URL + '/users', {
+      name: name, email: email, password: password
+    });
   }
 
+  /**
+   * 
+   * @param {number} id 
+   * @param {string} name 
+   * @param {number} email 
+   * @param {string} password 
+   */
+  edit(id, name, email) {
+    return this.apiService.requestWithToken('PUT', this.API_URL + '/users/' + id, {
+      name: name, email: email
+    });
+  }
+
+  /**
+   * 
+   * @param {number} id 
+   */
+  remove(id) {
+    return this.apiService.requestWithToken('DELETE', this.API_URL + '/users/' + id);
+  }
 }
 
 const UserService = {
