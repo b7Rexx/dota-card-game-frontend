@@ -42,6 +42,10 @@
             <span ng-if="col.type==='select'">
               {{row[col.tbody] | optionFilter:col.option}}
             </span>
+
+            <div ng-if="col.type==='image'">
+              <img ng-src="{{col.imageFunc(row)}}" alt="img">
+            </div>
           </td>
         </tr>
 

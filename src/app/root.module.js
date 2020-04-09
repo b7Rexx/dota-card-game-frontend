@@ -9,6 +9,7 @@ import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import Swal from 'sweetalert2'
+import ngFileModel from 'ng-file-model';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome';
@@ -16,8 +17,9 @@ import '@fortawesome/fontawesome-free-solid';
 import './root.component.scss';
 
 angular
-  .module('root', [uiRouter, uiBootstrap,])
+  .module('root', [uiRouter, uiBootstrap, 'ng-file-model'])
   .constant('API_URL', env.API_URL)
+  .constant('PUBLIC_URL', env.PUBLIC_URL)
   .constant('Swal', Swal)
 
   .run(function ($state, $transitions, authService, $timeout) {
@@ -69,6 +71,7 @@ angular
   //services
   .service(HeroService.selector, HeroService.service)
   .service(HeroTypeService.selector, HeroTypeService.service)
+  .service(HeroImageService.selector, HeroImageService.service)
   .service(UserService.selector, UserService.service)
   .service(ApiService.selector, ApiService.service)
   .service(AuthService.selector, AuthService.service)
@@ -126,6 +129,7 @@ import RegisterComponent from './auth/components/register.component';
 
 import HeroService from "./services/hero.service";
 import HeroTypeService from "./services/hero_type.service";
+import HeroImageService from "./services/hero_image.service";
 import UserService from "./services/user.service";
 import ApiService from "./services/api.service";
 import AuthService from "./services/auth.service";

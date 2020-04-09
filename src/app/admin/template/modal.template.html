@@ -9,11 +9,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group" ng-repeat="item in $ctrl.modalContent" ng-if="item.type !== 'hidden'">
+        <div class="form-group" ng-repeat="(index,item) in $ctrl.modalContent" ng-if="item.type !== 'hidden'">
           <label> {{item.label}}</label>
           <input ng-if="item.type==='text'" type="text" class="form-control" ng-model="item.value">
           <input ng-if="item.type==='email'" type="email" class="form-control" ng-model="item.value">
           <input ng-if="item.type==='password'" type="password" class="form-control" ng-model="item.value">
+          <input ng-if="item.type==='file'" type="file" class="form-control" ng-file-model="item.value">
+
           <select ng-if="item.type==='select'" class="form-control" ng-model="item.value"
             ng-options="option.value as option.name for option in item.option">
           </select>

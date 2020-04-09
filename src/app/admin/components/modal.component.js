@@ -1,9 +1,10 @@
 class ModalController {
   constructor($scope) {
     'ngInject';
+    var that = this;
     this.$scope = $scope;
   }
-
+  
   $onInit() {
     this.modalState = 'fade';
     this.loading = false;

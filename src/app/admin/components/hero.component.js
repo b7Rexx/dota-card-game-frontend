@@ -1,8 +1,9 @@
 class HeroController {
-  constructor($scope, heroService, heroTypeService, swalService, errMessageService) {
+  constructor($scope, heroService, heroTypeService, heroImageService, swalService, errMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.heroService = heroService;
+    this.heroImageService = heroImageService;
     this.swalService = swalService;
     this.errMessageService = errMessageService;
 
@@ -19,6 +20,7 @@ class HeroController {
       tableDefn: [
         { thead: 'SN', tbody: 'id', type: 'string' },
         { thead: 'Name', tbody: 'name', type: 'string' },
+        { thead: 'Image', tbody: 'image', type: 'image', imageFunc: this.imageFunc.bind(this) },
         { thead: 'Hero Type', tbody: 'hero_type_id', type: 'select', option: this.heroType },
         { thead: 'Status', tbody: 'status', type: 'status' },
         { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
@@ -66,6 +68,9 @@ class HeroController {
       });
   }
 
+  imageFunc(item) {
+    return this.heroImageService.getHeroImageByHeroObject(item, 'thumbnail');
+  }
   /**
    * modal functions
    */
@@ -82,6 +87,7 @@ class HeroController {
       'id': { 'name': 'id', 'label': 'Id', 'type': 'hidden', 'value': editId, 'error': '' },
       'name': { 'name': 'name', 'label': 'Name', 'type': 'text', 'value': name, 'error': '' },
       'hero_type_id': { 'name': 'hero_type_id', 'label': 'Hero type', 'type': 'select', option: this.heroType, 'value': hero_type_id, 'error': '' },
+      'image': { 'name': 'image', 'label': 'Hero Image', 'type': 'file', 'value': {}, 'error': '' },
     };
   }
 
@@ -89,26 +95,28 @@ class HeroController {
     var that = this;
     switch (action) {
       case 'edit':
-        this.heroService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.hero_type_id.value).then(() => {
-          cb(true);
-          that.getHeroData();
-        }).catch((err) => {
-          var errors = this.errMessageService.parseError(err.data.error);
-          this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
-          this.modalContent.name.error = errors.validations.name;
-          cb(false);
-        });
+        this.heroService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.hero_type_id.value, this.modalContent.image.value)
+          .then(() => {
+            cb(true);
+            that.getHeroData();
+          }).catch((err) => {
+            var errors = this.errMessageService.parseError(err.data.error);
+            this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+            this.modalContent.name.error = errors.validations.name;
+            cb(false);
+          });
         break;
       default:
-        this.heroService.create(this.modalContent.name.value, this.modalContent.hero_type_id.value).then(() => {
-          cb(true);
-          that.getHeroData();
-        }).catch((err) => {
-          var errors = this.errMessageService.parseError(err.data.error);
-          this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
-          this.modalContent.name.error = errors.validations.name;
-          cb(false);
-        });
+        this.heroService.create(this.modalContent.name.value, this.modalContent.hero_type_id.value, this.modalContent.image.value)
+          .then(() => {
+            cb(true);
+            that.getHeroData();
+          }).catch((err) => {
+            var errors = this.errMessageService.parseError(err.data.error);
+            this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+            this.modalContent.name.error = errors.validations.name;
+            cb(false);
+          });
         break;
     }
   }

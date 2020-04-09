@@ -6,17 +6,18 @@ class HeroServiceFunc {
   }
 
   getData() {
-    return this.apiService.request('GET', this.API_URL + '/heroes');
+    return this.apiService.request('GET', this.API_URL + '/heroes/paginate?pagesize=100');
   }
 
   /**
    * 
    * @param {string} name 
    * @param {number} hero_type_id 
+   * @param {*} image 
    */
-  create(name, hero_type_id) {
+  create(name, hero_type_id, image) {
     return this.apiService.requestWithToken('POST', this.API_URL + '/heroes', {
-      name: name, hero_type_id: hero_type_id
+      name: name, hero_type_id: hero_type_id, image: image.data || null
     });
   }
 
@@ -25,10 +26,11 @@ class HeroServiceFunc {
    * @param {number} id 
    * @param {string} name 
    * @param {number} hero_type_id 
+   * @param {*} image 
    */
-  edit(id, name, hero_type_id) {
+  edit(id, name, hero_type_id, image) {
     return this.apiService.requestWithToken('PUT', this.API_URL + '/heroes/' + id, {
-      name: name, hero_type_id: hero_type_id
+      name: name, hero_type_id: hero_type_id, image: image.data || null
     });
   }
 
