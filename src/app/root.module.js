@@ -46,7 +46,7 @@ angular
                 $timeout(function () {
                   $state.go('home')
                 })
-              // $state.target("home");
+              // $state.target("main");
             }
           }
           break;
@@ -63,6 +63,7 @@ angular
   .component(ListComponent.selector, ListComponent)
   .component(ModalComponent.selector, ModalComponent)
 
+  .component(MainComponent.selector, MainComponent)
   .component(HomeComponent.selector, HomeComponent)
   .component(NavbarComponent.selector, NavbarComponent)
   .component(LoginComponent.selector, LoginComponent)
@@ -99,23 +100,28 @@ angular
         name: 'admin.users', url: '/users', component: UserComponent.selector, parent: 'admin'
       })
 
-      .state('home', {
+      .state('main', {
         authenticate: false, isAdmin: false,
-        name: 'home', url: '/home', component: HomeComponent.selector
+        name: 'main', url: '/main', component: MainComponent.selector
       })
       .state('login', {
         authenticate: 'redirectIfAuth',
-        name: 'home.login', url: '/login', component: LoginComponent.selector, parent: 'home'
+        name: 'main.login', url: '/login', component: LoginComponent.selector, parent: 'main'
       })
       .state('register', {
         authenticate: 'redirectIfAuth',
-        name: 'home.register', url: '/register', component: RegisterComponent.selector, parent: 'home'
+        name: 'main.register', url: '/register', component: RegisterComponent.selector, parent: 'main'
+      })
+
+      .state('home', {
+        authenticate: 'requireAuth', isAdmin: false,
+        name: 'home', url: '/home', component: HomeComponent.selector
       })
       ;
 
     $locationProvider.hashPrefix('');
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('main');
   });
 
 import AdminHomeComponent from './admin/components/admin-home.component';
@@ -124,6 +130,7 @@ import UserComponent from './admin/components/user.component';
 import ListComponent from './admin/components/list.component';
 import ModalComponent from './admin/components/modal.component';
 
+import MainComponent from './auth/components/main.component';
 import HomeComponent from './auth/components/home.component';
 import NavbarComponent from './auth/components/navbar.component';
 import LoginComponent from './auth/components/login.component';
