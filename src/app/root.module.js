@@ -64,6 +64,7 @@ angular
   .component(ModalComponent.selector, ModalComponent)
 
   .component(HomeComponent.selector, HomeComponent)
+  .component(NavbarComponent.selector, NavbarComponent)
   .component(LoginComponent.selector, LoginComponent)
   .component(RegisterComponent.selector, RegisterComponent)
 
@@ -124,6 +125,7 @@ import ListComponent from './admin/components/list.component';
 import ModalComponent from './admin/components/modal.component';
 
 import HomeComponent from './auth/components/home.component';
+import NavbarComponent from './auth/components/navbar.component';
 import LoginComponent from './auth/components/login.component';
 import RegisterComponent from './auth/components/register.component';
 

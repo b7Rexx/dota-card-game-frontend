@@ -45,6 +45,8 @@ class AuthServiceFunc {
     localStorage.setItem('authExpire', expire);
     localStorage.setItem('authUser', JSON.stringify(user));
     localStorage.setItem('authIsAdmin', isAdmin);
+  
+  
   }
 
   /**
