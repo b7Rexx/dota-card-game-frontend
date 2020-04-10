@@ -6,7 +6,7 @@ class HeroTypeServiceFunc {
   }
 
   getData() {
-    return this.apiService.requestWithToken('GET', this.API_URL + '/herotypes');
+    return this.apiService.request('GET', this.API_URL + '/herotypes');
   }
 
   getFormattedHeroType() {

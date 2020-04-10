@@ -1,3 +1,20 @@
 <navbar-component></navbar-component>
 
-<ui-view></ui-view>
+<div class="game">
+  <div class="start-wrapper" ng-show="$ctrl.game.start">
+    <button class="btn btn-success" ng-click="$ctrl.start()">Start</button>
+  </div>
+  <div class="game-wrapper" ng-show="!$ctrl.game.start">
+    <div class="row">
+      <div class="col-md-4 game-hero-type" ng-repeat="herotype in $ctrl.game.herotypes">
+        <div class="title">{{herotype.name}}</div>
+        <div class="hero-block custom-scroll">
+          <div class="game-hero" ng-repeat="hero in $ctrl.game.heroes" ng-if="hero.hero_type_id === herotype.value"
+            ng-class="{'active':$ctrl.game.selected.includes(hero.id)}" ng-click="$ctrl.select(hero)">
+            <span>{{hero.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
