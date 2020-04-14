@@ -1,6 +1,5 @@
 <h4><i class="fa fa-users"></i> Users</h4>
 <div>
-  <list-component list-defn='$ctrl.listDefn' table-data="$ctrl.tableData"></list-component>
   <div class="row">
     <div class="col-sm-6">
       <button class="btn btn-sm btn-info" ng-click="$ctrl.openAddModal()">
@@ -9,6 +8,9 @@
       </button>
     </div>
   </div>
+
+  <list-component list-defn='$ctrl.listDefn' table-data="$ctrl.tableData"></list-component>
+
 <modal-component modal-title="$ctrl.modalTitle" modal-content="$ctrl.modalContent" modal-open="$ctrl.modalOpen"
     modal-action="$ctrl.modalAction" modal-save="$ctrl.modalSave(action,cb)"></modal-component>
 </div>
