@@ -41,7 +41,7 @@
             </span>
 
             <span ng-if="col.type==='select'">
-              {{row[col.tbody] | optionFilter:col.option}}
+              {{row[col.tbody] | OptionFilter:col.option}}
             </span>
 
             <div ng-if="col.type==='image'">

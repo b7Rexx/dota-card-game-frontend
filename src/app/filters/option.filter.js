@@ -1,8 +1,8 @@
 const OptionFilter = {
-  selector: 'optionFilter',
+  selector: 'OptionFilter',
   filter: function () {
     return function (item, arr) {
-      var result = arr.filter(val => {
+      let result = arr.filter(val => {
         return val.value == item;
       });
       if (result.hasOwnProperty(0)) {

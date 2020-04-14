@@ -1,10 +1,10 @@
 class RegisterController {
-  constructor($scope, $state, apiService,  API_URL, errMessageService) {
+  constructor($scope, $state, ApiService,  API_URL, ErrMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.$state = $state;
-    this.apiService = apiService;
-    this.errMessageService = errMessageService;
+    this.apiService = ApiService;
+    this.errMessageService = ErrMessageService;
     this.API_URL = API_URL;
   }
 
@@ -51,7 +51,7 @@ class RegisterController {
    * register click handler
    */
   submitAction() {
-    var that = this;
+    let that = this;
     this.requiredInput = true;
     this.registerBtn = 'Processing';
     this.apiService.request('POST', this.API_URL + '/users', {
@@ -66,7 +66,7 @@ class RegisterController {
       that.$state.go('login');
     }).catch((err) => {
       that.submitValidation();
-      var errors = that.errMessageService.parseError(err.data.error);
+      let errors = that.errMessageService.parseError(err.data.error);
       that.registerError = 'Register failed | ' + errors.message;
       that.registerBtn = 'Register';
       that.$scope.$apply();

@@ -6,7 +6,7 @@ class GameServiceFunc {
 }
 
 const GameService = {
-  selector: 'gameService',
+  selector: 'GameService',
   service: GameServiceFunc
 };
 

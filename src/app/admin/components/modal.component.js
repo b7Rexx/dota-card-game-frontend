@@ -1,10 +1,10 @@
 class ModalController {
-  constructor($scope) {
+  constructor($scope, $timeout) {
     'ngInject';
-    var that = this;
     this.$scope = $scope;
+    this.$timeout = $timeout;
   }
-  
+
   $onInit() {
     this.modalState = 'fade';
     this.loading = false;
@@ -25,7 +25,7 @@ class ModalController {
   }
 
   save() {
-    var that = this;
+    let that = this;
     that.loading = true;
     this.modalSave({
       action: this.modalAction,
@@ -37,7 +37,7 @@ class ModalController {
         } else {
           that.saveState = true;
           that.$scope.$apply();
-          setTimeout(function () {
+          that.$timeout(function () {
             that.saveState = false;
             that.$scope.$apply();
           }, 2000);

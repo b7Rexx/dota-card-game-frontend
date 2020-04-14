@@ -25,7 +25,7 @@ class SwalServiceFunc {
 }
 
 const SwalService = {
-  selector: 'swalService',
+  selector: 'SwalService',
   service: SwalServiceFunc
 };
 

@@ -1,18 +1,17 @@
 class HeroImageServiceFunc {
-  constructor(apiService, PUBLIC_URL) {
+  constructor(PUBLIC_URL) {
     'ngInject';
     this.PUBLIC_URL = PUBLIC_URL;
-    this.apiService = apiService;
   }
 
   getHeroImageByHeroObject(heroObject, type) {
-    var heroImagesObject = [];
+    let heroImagesObject = [];
     if (heroObject.hasOwnProperty('relateHeroImages')) {
       heroImagesObject = heroObject.relateHeroImages;
     }
     if (heroImagesObject.length > 0) {
-      var imageObj = heroImagesObject[0];
-      var image = false;
+      let imageObj = heroImagesObject[0];
+      let image = false;
       switch (type) {
         case 'thumbnail':
           image = imageObj.thumbnail;
@@ -34,7 +33,7 @@ class HeroImageServiceFunc {
 }
 
 const HeroImageService = {
-  selector: 'heroImageService',
+  selector: 'HeroImageService',
   service: HeroImageServiceFunc
 };
 

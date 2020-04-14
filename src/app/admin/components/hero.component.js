@@ -1,17 +1,20 @@
 class HeroController {
-  constructor($scope, heroService, heroTypeService, heroImageService, swalService, errMessageService) {
+  constructor($scope, HeroService, HeroTypeService, HeroImageService, SwalService, ErrMessageService) {
     'ngInject';
     this.$scope = $scope;
-    this.heroService = heroService;
-    this.heroImageService = heroImageService;
-    this.swalService = swalService;
-    this.errMessageService = errMessageService;
+    this.heroService = HeroService;
+    this.heroTypeService = HeroTypeService;
+    this.heroImageService = HeroImageService;
+    this.swalService = SwalService;
+    this.errMessageService = ErrMessageService;
+    this.heroType = [];
 
     //get formatted hero types from hero services api
-    heroTypeService.getFormattedHeroType().then(result => {
-      this.heroType = result;
-      this.init();
-    });
+    this.heroTypeService.getFormattedHeroType()
+      .then(result => {
+        this.heroType = result;
+        this.init();
+      });
   }
 
   init() {
@@ -23,8 +26,8 @@ class HeroController {
         { thead: 'Image', tbody: 'image', type: 'image', imageFunc: this.imageFunc.bind(this) },
         { thead: 'Hero Type', tbody: 'hero_type_id', type: 'select', option: this.heroType },
         { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
+        { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
+        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
       ]
     };
     this.$scope.$apply();
@@ -43,12 +46,12 @@ class HeroController {
     });
   }
 
-  cbEdit(item) {
+  onEdit(item) {
     this.openAddModal(item.id, item.name, item.hero_type_id);
   }
 
-  cbDelete(item) {
-    var that = this;
+  onDelete(item) {
+    let that = this;
     this.swalService.confirmWithSwal()
       .then((result) => {
         if (result.value) {
@@ -92,7 +95,7 @@ class HeroController {
   }
 
   modalSave(action, cb) {
-    var that = this;
+    let that = this;
     switch (action) {
       case 'edit':
         this.heroService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.hero_type_id.value, this.modalContent.image.value)
@@ -100,7 +103,7 @@ class HeroController {
             cb(true);
             that.getHeroData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
             this.modalContent.name.error = errors.validations.name;
             cb(false);
@@ -112,7 +115,7 @@ class HeroController {
             cb(true);
             that.getHeroData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
             this.modalContent.name.error = errors.validations.name;
             cb(false);

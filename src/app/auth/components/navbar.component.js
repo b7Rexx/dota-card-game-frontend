@@ -1,11 +1,11 @@
 class NavbarController {
-  constructor(authService, $state, $scope) {
+  constructor(AuthService, $state, $scope) {
     'ngInject';
     this.$state = $state;
     this.$scope = $scope;
-    this.authService = authService;
-    this.auth = authService.isAuthenticated();
-    this.isAdmin = authService.isAdminAuthenticated();
+    this.authService = AuthService;
+    this.auth = this.authService.isAuthenticated();
+    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   logout() {

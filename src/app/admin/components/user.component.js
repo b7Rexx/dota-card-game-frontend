@@ -1,10 +1,10 @@
 class UserController {
-  constructor(userService, $scope, swalService, errMessageService) {
+  constructor(UserService, $scope, SwalService, ErrMessageService) {
     'ngInject';
     this.$scope = $scope;
-    this.userService = userService;
-    this.swalService = swalService;
-    this.errMessageService = errMessageService;
+    this.userService = UserService;
+    this.swalService = SwalService;
+    this.errMessageService = ErrMessageService;
 
     this.listDefn = {
       title: 'Users',
@@ -13,8 +13,8 @@ class UserController {
         { thead: 'Name', tbody: 'name', type: 'string' },
         { thead: 'Email', tbody: 'email', type: 'string' },
         { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
+        { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
+        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
 
       ]
     };
@@ -25,21 +25,22 @@ class UserController {
   }
 
   getUserData() {
-    this.userService.getData().then((result) => {
-      this.tableData = result.data.data.model;
-      this.$scope.$apply();
-    }).catch(err => {
-      var errors = this.errMessageService.parseError(err.data.error);
-      this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
-      this.modalContent.name.error = errors.validations.name;
-    });
+    this.userService.getData()
+      .then((result) => {
+        this.tableData = result.data.data.model;
+        this.$scope.$apply();
+      }).catch(err => {
+        let errors = this.errMessageService.parseError(err.data.error);
+        this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+        this.modalContent.name.error = errors.validations.name;
+      });
   }
-  cbEdit(item) {
+  onEdit(item) {
     this.openAddModal(item.id, item.name, item.email);
   }
 
-  cbDelete(item) {
-    var that = this;
+  onDelete(item) {
+    let that = this;
     this.swalService.confirmWithSwal()
       .then((result) => {
         if (result.value) {
@@ -84,7 +85,7 @@ class UserController {
   }
 
   modalSave(action, cb) {
-    var that = this;
+    let that = this;
     switch (action) {
       case 'edit':
         this.userService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.email.value)
@@ -92,7 +93,7 @@ class UserController {
             cb(true);
             that.getUserData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.name.error = errors.validations.name;
             this.modalContent.email.error = errors.validations.email;
             cb(false);
@@ -103,7 +104,7 @@ class UserController {
           cb(true);
           that.getUserData();
         }).catch((err) => {
-          var errors = this.errMessageService.parseError(err.data.error);
+          let errors = this.errMessageService.parseError(err.data.error);
           this.modalContent.name.error = errors.validations.name;
           this.modalContent.email.error = errors.validations.email;
           this.modalContent.password.error = errors.validations.password;

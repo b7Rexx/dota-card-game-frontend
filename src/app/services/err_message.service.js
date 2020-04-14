@@ -1,5 +1,3 @@
-import { isArray } from "@uirouter/angularjs";
-
 class ErrMessageServiceFunc {
   constructor() {
     'ngInject';
@@ -15,7 +13,7 @@ class ErrMessageServiceFunc {
   }
 
   parseValidationError(errors) {
-    var errorsParsed = {};
+    let errorsParsed = {};
     if (Array.isArray(errors)) {
       errors.forEach(element => {
         errorsParsed[element.param] = element.message;
@@ -27,7 +25,7 @@ class ErrMessageServiceFunc {
 }
 
 const ErrMessageService = {
-  selector: 'errMessageService',
+  selector: 'ErrMessageService',
   service: ErrMessageServiceFunc
 };
 

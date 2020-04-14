@@ -1,12 +1,11 @@
 class LoginController {
-  constructor($scope, $state, apiService, authService, API_URL, errMessageService) {
+  constructor($scope, $state, ApiService, AuthService,  ErrMessageService) {
     'ngInject';
     this.$scope = $scope;
     this.$state = $state;
-    this.apiService = apiService;
-    this.authService = authService;
-    this.errMessageService = errMessageService;
-    this.API_URL = API_URL;
+    this.apiService = ApiService;
+    this.authService = AuthService;
+    this.errMessageService = ErrMessageService;
   }
 
   $onInit() {
@@ -44,10 +43,10 @@ class LoginController {
    * Login click handler
    */
   submitAction() {
-    var that = this;
+    let that = this;
     this.requiredInput = true;
     this.loginBtn = 'Processing';
-    this.apiService.request('POST', this.API_URL + '/auth/login', {
+    this.apiService.request('POST', '/auth/login', {
       email: this.email,
       password: this.password
     }).then((result) => {
@@ -61,7 +60,7 @@ class LoginController {
         that.$state.go('home');
     }).catch((err) => {
       that.submitValidation();
-      var errors = that.errMessageService.parseError(err.data.error);
+      let errors = that.errMessageService.parseError(err.data.error);
       that.loginError = 'Login failed | ' + errors.message;
       that.loginBtn = 'Login';
       that.$scope.$apply();

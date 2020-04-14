@@ -1,6 +1,6 @@
 //env config
 import '../../env';
-var env = {};
+const env = {};
 if (window) {
   Object.assign(env, window.__env);
 }
@@ -22,12 +22,12 @@ angular
   .constant('PUBLIC_URL', env.PUBLIC_URL)
   .constant('Swal', Swal)
 
-  .run(function ($state, $transitions, authService, $timeout) {
+  .run(function ($state, $transitions, AuthService, $timeout) {
     $transitions.onStart({}, function (transition) {
 
       switch (transition.to().authenticate) {
         case 'redirectIfAuth':
-          if (authService.isAuthenticated()) {
+          if (AuthService.isAuthenticated()) {
             $timeout(function () {
               $state.go('home')
             })
@@ -35,14 +35,14 @@ angular
           }
           break;
         case 'requireAuth':
-          if (!authService.isAuthenticated()) {
+          if (!AuthService.isAuthenticated()) {
             $timeout(function () {
               $state.go('login')
             })
             // $state.target("login");
           } else {
             if (transition.to().isAdmin === true) {
-              if (!authService.isAdminAuthenticated())
+              if (!AuthService.isAdminAuthenticated())
                 $timeout(function () {
                   $state.go('home')
                 })
@@ -64,6 +64,7 @@ angular
   .component(ModalComponent.selector, ModalComponent)
 
   .component(MainComponent.selector, MainComponent)
+  .component(GameComponent.selector, GameComponent)
   .component(HomeComponent.selector, HomeComponent)
   .component(NavbarComponent.selector, NavbarComponent)
   .component(LoginComponent.selector, LoginComponent)
@@ -79,6 +80,7 @@ angular
   .service(AuthService.selector, AuthService.service)
   .service(SwalService.selector, SwalService.service)
   .service(ErrMessageService.selector, ErrMessageService.service)
+  .service(StorageService.selector, StorageService.service)
 
   //filters
   .filter(OptionFilter.selector, OptionFilter.filter)
@@ -104,6 +106,10 @@ angular
         authenticate: false, isAdmin: false,
         name: 'main', url: '/main', component: MainComponent.selector
       })
+      .state('game', {
+        authenticate: false, isAdmin: false,
+        name: 'main.game', url: '/', component: GameComponent.selector,parent:'main'
+      })
       .state('login', {
         authenticate: 'redirectIfAuth',
         name: 'main.login', url: '/login', component: LoginComponent.selector, parent: 'main'
@@ -121,7 +127,7 @@ angular
 
     $locationProvider.hashPrefix('');
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('main');
+    $urlRouterProvider.otherwise('main/');
   });
 
 import AdminHomeComponent from './admin/components/admin-home.component';
@@ -129,10 +135,10 @@ import HeroComponent from './admin/components/hero.component';
 import UserComponent from './admin/components/user.component';
 import ListComponent from './admin/components/list.component';
 import ModalComponent from './admin/components/modal.component';
-
-import MainComponent from './auth/components/main.component';
-import HomeComponent from './auth/components/home.component';
 import NavbarComponent from './auth/components/navbar.component';
+import MainComponent from './auth/components/main.component';
+import GameComponent from './auth/components/game.component';
+import HomeComponent from './auth/components/home.component';
 import LoginComponent from './auth/components/login.component';
 import RegisterComponent from './auth/components/register.component';
 
@@ -144,5 +150,6 @@ import ApiService from "./services/api.service";
 import AuthService from "./services/auth.service";
 import SwalService from "./services/swal.service";
 import ErrMessageService from "./services/err_message.service";
+import StorageService from "./services/storage.service";
 
 import OptionFilter from "./filters/option.filter";
