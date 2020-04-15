@@ -1,10 +1,3 @@
-//env config
-import '../../env';
-const env = {};
-if (window) {
-  Object.assign(env, window.__env);
-}
-
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
@@ -18,8 +11,8 @@ import './root.component.scss';
 
 angular
   .module('root', [uiRouter, uiBootstrap, 'ng-file-model'])
-  .constant('API_URL', env.API_URL)
-  .constant('PUBLIC_URL', env.PUBLIC_URL)
+  .constant('API_URL', process.env.NODE_API_URL)
+  .constant('PUBLIC_URL', process.env.NODE_PUBLIC_URL)
   .constant('Swal', Swal)
 
   .run(function ($state, $transitions, AuthService, $timeout) {

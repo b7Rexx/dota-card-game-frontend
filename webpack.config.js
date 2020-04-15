@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const Dotenv = require('dotenv-webpack');
+ 
 const rules = [
   {
     test: /\.js$/,
@@ -70,15 +71,13 @@ const rules = [
 
 const plugins = [
   new webpack.ProgressPlugin(),
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-  }),
   new HtmlWebpackPlugin({
     minify: false,
     template: path.join(__dirname, 'src/index.html'),
     inject: 'body',
     hash: false
-  })
+  }),
+  new Dotenv()
 ];
 
 if (process.env.NODE_ENV === 'development') {
