@@ -81,6 +81,7 @@ angular
   .service(SwalService.selector, SwalService.service)
   .service(ErrMessageService.selector, ErrMessageService.service)
   .service(StorageService.selector, StorageService.service)
+  .service(ListDefinitionService.selector, ListDefinitionService.service)
 
   //filters
   .filter(OptionFilter.selector, OptionFilter.filter)
@@ -151,5 +152,6 @@ import AuthService from "./services/auth.service";
 import SwalService from "./services/swal.service";
 import ErrMessageService from "./services/err_message.service";
 import StorageService from "./services/storage.service";
+import ListDefinitionService from "./services/list_definition.service";
 
 import OptionFilter from "./filters/option.filter";

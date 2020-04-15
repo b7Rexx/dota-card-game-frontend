@@ -1,12 +1,13 @@
 class HeroController {
-  constructor($scope, HeroService, HeroTypeService, HeroImageService, SwalService, ErrMessageService) {
+  constructor($scope, HeroService, HeroTypeService, HeroImageService, SwalService, ErrMessageService, ListDefinitionService) {
     'ngInject';
     this.$scope = $scope;
+    this.swalService = SwalService;
     this.heroService = HeroService;
     this.heroTypeService = HeroTypeService;
     this.heroImageService = HeroImageService;
-    this.swalService = SwalService;
     this.errMessageService = ErrMessageService;
+    this.listDefinitionService = ListDefinitionService;
     this.heroType = [];
 
     //get formatted hero types from hero services api
@@ -18,9 +19,8 @@ class HeroController {
   }
 
   init() {
-    this.listDefn = {
-      title: 'Hero',
-      tableDefn: [
+    this.listDefn = this.listDefinitionService.getListDefinition('Hero',
+      [
         { thead: 'SN', tbody: 'id', type: 'string' },
         { thead: 'Name', tbody: 'name', type: 'string' },
         { thead: 'Image', tbody: 'image', type: 'image', imageFunc: this.imageFunc.bind(this) },
@@ -29,7 +29,7 @@ class HeroController {
         { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
         { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
       ]
-    };
+    );
     this.$scope.$apply();
   }
 

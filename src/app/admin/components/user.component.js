@@ -1,23 +1,22 @@
 class UserController {
-  constructor(UserService, $scope, SwalService, ErrMessageService) {
+  constructor(UserService, $scope, SwalService, ErrMessageService, ListDefinitionService) {
     'ngInject';
     this.$scope = $scope;
     this.userService = UserService;
     this.swalService = SwalService;
     this.errMessageService = ErrMessageService;
+    this.listDefinitionService = ListDefinitionService;
 
-    this.listDefn = {
-      title: 'Users',
-      tableDefn: [
+    this.listDefn = this.listDefinitionService.getListDefinition('Users',
+      [
         { thead: 'SN', tbody: 'id', type: 'string' },
         { thead: 'Name', tbody: 'name', type: 'string' },
         { thead: 'Email', tbody: 'email', type: 'string' },
         { thead: 'Status', tbody: 'status', type: 'status' },
         { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
         { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
-
       ]
-    };
+    );
   }
 
   $onInit() {
