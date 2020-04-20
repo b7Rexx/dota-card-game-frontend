@@ -4,7 +4,7 @@ class StorageServiceFunc {
   }
 
   getItem(key) {
-    return JSON.parse(this.isJson(localStorage.getItem(key)));
+    return localStorage.getItem(key) ;
   }
 
   /**

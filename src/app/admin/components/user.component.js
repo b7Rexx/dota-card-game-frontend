@@ -9,12 +9,12 @@ class UserController {
 
     this.listDefn = this.listDefinitionService.getListDefinition('Users',
       [
-        { thead: 'SN', tbody: 'id', type: 'string' },
-        { thead: 'Name', tbody: 'name', type: 'string' },
-        { thead: 'Email', tbody: 'email', type: 'string' },
-        { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
+        this.listDefinitionService.getTableColumn('SN', 'string', 'id'),
+        this.listDefinitionService.getTableColumn('Name', 'string', 'name'),
+        this.listDefinitionService.getTableColumn('Email', 'string', 'email'),
+        this.listDefinitionService.getTableColumn('Status', 'status', 'status'),
+        this.listDefinitionService.getTableColumn('Edit', 'button', 'edit', { icon: 'fa fa-edit', action: this.onEdit.bind(this) }),
+        this.listDefinitionService.getTableColumn('Delete', 'button', 'delete', { icon: 'fa fa-trash', action: this.onDelete.bind(this) })
       ]
     );
   }

@@ -25,6 +25,14 @@ class HeroController {
         // { thead: 'Action', icon: 'fa fa-edit', type: 'button', action: this.cbFunc },
       ]
     };
+
+    this.currentPage = 1;
+    this.pageSize = 5;
+    this.totalItems = 0;
+  }
+
+  $onChanges() {
+    this.totalItems = this.tableData ? this.tableData.length : 0;
   }
 }
 

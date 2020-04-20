@@ -21,13 +21,13 @@ class HeroController {
   init() {
     this.listDefn = this.listDefinitionService.getListDefinition('Hero',
       [
-        { thead: 'SN', tbody: 'id', type: 'string' },
-        { thead: 'Name', tbody: 'name', type: 'string' },
-        { thead: 'Image', tbody: 'image', type: 'image', imageFunc: this.imageFunc.bind(this) },
-        { thead: 'Hero Type', tbody: 'hero_type_id', type: 'select', option: this.heroType },
-        { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.onEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.onDelete.bind(this) },
+        this.listDefinitionService.getTableColumn('SN', 'string', 'id'),
+        this.listDefinitionService.getTableColumn('Name', 'string', 'name'),
+        this.listDefinitionService.getTableColumn('Image', 'image', 'image', { imageFunc: this.imageFunc.bind(this) }),
+        this.listDefinitionService.getTableColumn('Hero Type', 'select', 'hero_type_id', { option: this.heroType }),
+        this.listDefinitionService.getTableColumn('Status', 'status', 'status'),
+        this.listDefinitionService.getTableColumn('Edit', 'button', 'edit', { icon: 'fa fa-edit', action: this.onEdit.bind(this) }),
+        this.listDefinitionService.getTableColumn('Delete', 'button', 'delete', { icon: 'fa fa-trash', action: this.onDelete.bind(this) })
       ]
     );
     this.$scope.$apply();
