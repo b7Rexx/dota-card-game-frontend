@@ -4,7 +4,7 @@ class AuthServiceFunc {
     this.storageService = StorageService;
     this.authToken = this.storageService.getItem('authToken');//session variable for token
     this.authExpire = this.storageService.getItem('authExpire');//session variable for expire time
-    this.authUser = this.storageService.getItem('authUser');//session variable for user data
+    this.authUser = this.storageService.getItem('authUser',true);//session variable for user data
     this.authIsAdmin = this.storageService.getItem('authIsAdmin');//session variable for isAdmin
   }
 

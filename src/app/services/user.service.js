@@ -1,12 +1,19 @@
 class UserServiceFunc {
-  constructor(ApiService) {
+  constructor(ApiService, AuthService) {
     'ngInject';
     this.apiService = ApiService;
+    this.authService = AuthService;
   }
 
 
   getData() {
     return this.apiService.requestWithToken('GET', '/users');
+  }
+
+  getAuthUser() {
+    let authId = 0;
+    if (this.authService.authUser) authId = this.authService.authUser.id || 0;
+    return this.apiService.requestWithToken('GET', '/users/' + authId);
   }
 
   /**

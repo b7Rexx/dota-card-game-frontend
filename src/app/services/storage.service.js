@@ -3,8 +3,20 @@ class StorageServiceFunc {
     'ngInject';
   }
 
-  getItem(key) {
-    return localStorage.getItem(key) ;
+  /**
+   * 
+   * @param {*} key 
+   * @param {boolean} parseObject 
+   */
+  getItem(key, parseObject = false) {
+    let item = localStorage.getItem(key);
+    if (parseObject) {
+      if (this.isJson(item))
+        item = JSON.parse(item);
+      else
+        item = {};
+    }
+    return item;
   }
 
   /**

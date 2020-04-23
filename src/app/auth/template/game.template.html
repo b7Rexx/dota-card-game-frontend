@@ -3,6 +3,9 @@
     <button class="btn btn-success" ng-click="$ctrl.start()">Start</button>
   </div>
   <div class="game-wrapper" ng-show="!$ctrl.game.start">
+    <div class="timer">
+      <span >{{$ctrl.game.timer}}</span>
+    </div>
     <div class="row">
       <div class="col-md-4 game-hero-type" ng-repeat="herotype in $ctrl.game.herotypes">
         <div class="title">{{herotype.name}}</div>

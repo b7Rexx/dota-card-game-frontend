@@ -8,7 +8,8 @@ class GameController {
       start: false,
       herotypes: [],
       heroes: [],
-      selected: []
+      selected: [],
+      timer: 15
     };
     this.getHeroes();
     this.getHeroTypes();
@@ -22,6 +23,9 @@ class GameController {
     if (this.game.selected.includes(hero.id)) {
       this.game.selected.splice(this.game.selected.indexOf(hero.id), 1);
     } else {
+      if (this.game.selected.length > 2) {
+        this.game.selected.splice(0, 1);
+      }
       this.game.selected = [...this.game.selected, hero.id];
     }
   }

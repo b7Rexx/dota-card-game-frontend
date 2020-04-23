@@ -62,6 +62,7 @@ angular
   .component(NavbarComponent.selector, NavbarComponent)
   .component(LoginComponent.selector, LoginComponent)
   .component(RegisterComponent.selector, RegisterComponent)
+  .component(ProfileComponent.selector, ProfileComponent)
 
 
   //services
@@ -104,6 +105,10 @@ angular
         authenticate: false, isAdmin: false,
         name: 'main.game', url: '/', component: GameComponent.selector,parent:'main'
       })
+      .state('profile', {
+        authenticate: 'requireAuth', isAdmin: false,
+        name: 'main.profile', url: '/profile', component: ProfileComponent.selector,parent:'main'
+      })
       .state('login', {
         authenticate: 'redirectIfAuth',
         name: 'main.login', url: '/login', component: LoginComponent.selector, parent: 'main'
@@ -135,6 +140,7 @@ import GameComponent from './auth/components/game.component';
 import HomeComponent from './auth/components/home.component';
 import LoginComponent from './auth/components/login.component';
 import RegisterComponent from './auth/components/register.component';
+import ProfileComponent from './auth/components/profile.component';
 
 import HeroService from "./services/hero.service";
 import HeroTypeService from "./services/hero_type.service";
