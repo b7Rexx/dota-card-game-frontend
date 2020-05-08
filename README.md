@@ -16,5 +16,6 @@ Clone the repository, install the dependencies.
 Make a copy of `.env.example` as `.env` and update your application details. 
 
 Finally, start the application.
+
     $ npm run start:dev (For development)
     $ npm start (For production)
