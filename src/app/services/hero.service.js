@@ -1,12 +1,11 @@
 class HeroServiceFunc {
-  constructor(apiService, API_URL) {
+  constructor(ApiService) {
     'ngInject';
-    this.API_URL = API_URL;
-    this.apiService = apiService;
+    this.apiService = ApiService;
   }
 
   getData() {
-    return this.apiService.request('GET', this.API_URL + '/heroes/paginate?pagesize=100');
+    return this.apiService.request('GET', '/heroes/paginate?pagesize=100');
   }
 
   /**
@@ -16,7 +15,7 @@ class HeroServiceFunc {
    * @param {*} image 
    */
   create(name, hero_type_id, image) {
-    return this.apiService.requestWithToken('POST', this.API_URL + '/heroes', {
+    return this.apiService.requestWithToken('POST', '/heroes', {
       name: name, hero_type_id: hero_type_id, image: image.data || null
     });
   }
@@ -29,7 +28,7 @@ class HeroServiceFunc {
    * @param {*} image 
    */
   edit(id, name, hero_type_id, image) {
-    return this.apiService.requestWithToken('PUT', this.API_URL + '/heroes/' + id, {
+    return this.apiService.requestWithToken('PUT', '/heroes/' + id, {
       name: name, hero_type_id: hero_type_id, image: image.data || null
     });
   }
@@ -39,12 +38,12 @@ class HeroServiceFunc {
    * @param {number} id 
    */
   remove(id) {
-    return this.apiService.requestWithToken('DELETE', this.API_URL + '/heroes/' + id);
+    return this.apiService.requestWithToken('DELETE', '/heroes/' + id);
   }
 }
 
 const HeroService = {
-  selector: 'heroService',
+  selector: 'HeroService',
   service: HeroServiceFunc
 };
 

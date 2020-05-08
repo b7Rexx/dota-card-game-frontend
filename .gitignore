@@ -23,7 +23,7 @@ build
 dist
 
 # Dotenv configuration
-env.js
+.env
 
 # Tests
 coverage

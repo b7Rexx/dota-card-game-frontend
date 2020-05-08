@@ -5,7 +5,7 @@ cache:
   directories:
     - node_modules
 befre_script:
-  - cp env.example.js env.js
+  - cp .env.example .env
   - npm install
 script:
   - npm run build:prod

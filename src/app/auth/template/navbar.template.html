@@ -6,13 +6,14 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" ui-sref="main" ui-sref-active="active">Home</a>
+    <a class="navbar-brand" ui-sref="game" ui-sref-active="active" ng-if="!$ctrl.isAdmin">Home</a>
+    <a class="navbar-brand" ui-sref="dashboard" ui-sref-active="active" ng-if="$ctrl.isAdmin">Dashboard</a>
   </div>
   <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
     <ul class="nav navbar-nav" ng-show="$ctrl.auth">
-      <li ng-show="$ctrl.isAdmin"><a ui-sref="users" ui-sref-active="active">User</a></li>
-      <li ng-show="$ctrl.isAdmin"><a ui-sref="heroes" ui-sref-active="active">Hero</a></li>
-      <li ng-show="$ctrl.isAdmin"><a ui-sref="#" ui-sref-active="active">Record</a></li>
+      <li ng-if="$ctrl.isAdmin"><a ui-sref="users" ui-sref-active="active">User</a></li>
+      <li ng-if="$ctrl.isAdmin"><a ui-sref="heroes" ui-sref-active="active">Hero</a></li>
+      <li ng-if="$ctrl.isAdmin"><a ui-sref="#" ui-sref-active="active">Record</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" ng-show="!$ctrl.auth">
       <li><a ui-sref="login" ui-sref-active="active">Login</a></li>
@@ -22,7 +23,8 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle">Profile <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a ui-sref="admin" ng-if="$ctrl.isAdmin">Dashboard</a></li>
+          <li><a ui-sref="game" ng-if="$ctrl.isAdmin">Home</a></li>
+          <li><a ui-sref="dashboard" ng-if="$ctrl.isAdmin">Dashboard</a></li>
           <li><a ui-sref="profile" ng-if="!$ctrl.isAdmin">My Profile</a></li>
           <li role="separator" class="divider"></li>
           <li><a ng-click="$ctrl.logout()"> <i class="fa fa-sign-out-alt"></i> Logout</a></li>

@@ -102,6 +102,7 @@ body {
     height: 80vh;
     width: 80vw;
     background: var(--brand--);
+    border-radius: 10px;
 }
 
 .start-wrapper {
@@ -113,9 +114,10 @@ body {
 }
 
 .game-wrapper {
+    position: relative;
     width: inherit;
     height: inherit;
-    padding: 18px;
+    padding: 20px;
 }
 
 .game-hero-type {
@@ -123,33 +125,53 @@ body {
 }
 
 .game-hero-type .title {
-    padding: 10px;
+    padding: 15px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background: var(--bg-primary--);
 }
 
 .hero-block {
-    height: 72vh;
+    height: 70vh;
     overflow: auto;
+    border: 1px solid white;
+    background: var(--bg-primary--);
 }
 
 .game-hero {
-    margin: 10px 0;
-    padding: 10px;
-    background: var(--bg-primary--);
-    opacity: 0.7;
+    margin: 20px;
+    padding: 15px;
+    background: var(--brand--);
+    opacity: 0.9;
+    border-radius: 50%;
     cursor: pointer;
+}
+.game-hero span {
+    color: white;
 }
 
 .game-hero.active {
     font-weight: bold;
+    border-radius: 15px;
     background: var(--bg-secondary--);
-    opacity: 0.9;
-    border-radius: 10px;
 }
 .game-hero.active span {
     color: white;
+}
+.timer {
+    position: absolute;
+    z-index: 10;
+    right: 20px;
+}
+
+.timer span {
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    background: grey;
+    border-radius: 50%;
+    padding: 2px 5px;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
@@ -174,4 +196,52 @@ body {
         to(var(--brand--)),
         color-stop(0.6, var(--bg-secondary--))
     );
+}
+
+.page-title {
+    padding: 10px 20px;
+    font-size: 24px;
+}
+
+.profile-card {
+    border-radius: 15px;
+    padding: 15px;
+    background: var(--bg-secondary--);
+}
+
+.profile-card * {
+    color: var(--text-white--);
+}
+
+.block-title {
+    font-size: 16px;
+}
+
+.profile-img {
+    height: 280px;
+    border: 1px solid white;
+}
+
+.profile-records ul li {
+    list-style: none;
+    display: block;
+    background: white;
+    margin: 5px;
+    padding: 5px;
+}
+
+.game-point,
+game-winner,
+.game-loser {
+    margin-left: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px;
+}
+
+.game-winner {
+    color: #4bb543;
+}
+
+.game-loser {
+    color: #ff4545;
 }

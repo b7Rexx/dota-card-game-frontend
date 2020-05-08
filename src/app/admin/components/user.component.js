@@ -1,23 +1,22 @@
 class UserController {
-  constructor(userService, $scope, swalService, errMessageService) {
+  constructor(UserService, $scope, SwalService, ErrMessageService, ListDefinitionService) {
     'ngInject';
     this.$scope = $scope;
-    this.userService = userService;
-    this.swalService = swalService;
-    this.errMessageService = errMessageService;
+    this.userService = UserService;
+    this.swalService = SwalService;
+    this.errMessageService = ErrMessageService;
+    this.listDefinitionService = ListDefinitionService;
 
-    this.listDefn = {
-      title: 'Users',
-      tableDefn: [
-        { thead: 'SN', tbody: 'id', type: 'string' },
-        { thead: 'Name', tbody: 'name', type: 'string' },
-        { thead: 'Email', tbody: 'email', type: 'string' },
-        { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Action', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
-
+    this.listDefn = this.listDefinitionService.getListDefinition('Users',
+      [
+        this.listDefinitionService.getTableColumn('SN', 'string', 'id'),
+        this.listDefinitionService.getTableColumn('Name', 'string', 'name'),
+        this.listDefinitionService.getTableColumn('Email', 'string', 'email'),
+        this.listDefinitionService.getTableColumn('Status', 'status', 'status'),
+        this.listDefinitionService.getTableColumn('Edit', 'button', 'edit', { icon: 'fa fa-edit', action: this.onEdit.bind(this) }),
+        this.listDefinitionService.getTableColumn('Delete', 'button', 'delete', { icon: 'fa fa-trash', action: this.onDelete.bind(this) })
       ]
-    };
+    );
   }
 
   $onInit() {
@@ -25,21 +24,22 @@ class UserController {
   }
 
   getUserData() {
-    this.userService.getData().then((result) => {
-      this.tableData = result.data.data.model;
-      this.$scope.$apply();
-    }).catch(err => {
-      var errors = this.errMessageService.parseError(err.data.error);
-      this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
-      this.modalContent.name.error = errors.validations.name;
-    });
+    this.userService.getData()
+      .then((result) => {
+        this.tableData = result.data.data.model;
+        this.$scope.$apply();
+      }).catch(err => {
+        let errors = this.errMessageService.parseError(err.data.error);
+        this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
+        this.modalContent.name.error = errors.validations.name;
+      });
   }
-  cbEdit(item) {
+  onEdit(item) {
     this.openAddModal(item.id, item.name, item.email);
   }
 
-  cbDelete(item) {
-    var that = this;
+  onDelete(item) {
+    let that = this;
     this.swalService.confirmWithSwal()
       .then((result) => {
         if (result.value) {
@@ -84,7 +84,7 @@ class UserController {
   }
 
   modalSave(action, cb) {
-    var that = this;
+    let that = this;
     switch (action) {
       case 'edit':
         this.userService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.email.value)
@@ -92,7 +92,7 @@ class UserController {
             cb(true);
             that.getUserData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.name.error = errors.validations.name;
             this.modalContent.email.error = errors.validations.email;
             cb(false);
@@ -103,7 +103,7 @@ class UserController {
           cb(true);
           that.getUserData();
         }).catch((err) => {
-          var errors = this.errMessageService.parseError(err.data.error);
+          let errors = this.errMessageService.parseError(err.data.error);
           this.modalContent.name.error = errors.validations.name;
           this.modalContent.email.error = errors.validations.email;
           this.modalContent.password.error = errors.validations.password;

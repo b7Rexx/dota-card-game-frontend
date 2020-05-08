@@ -1,8 +1,9 @@
 class ApiServiceFunc {
-  constructor($http, authService) {
+  constructor($http, AuthService, API_URL) {
     'ngInject';
     this.$http = $http;
-    this.authService = authService;
+    this.API_URL = API_URL;
+    this.authService = AuthService;
   }
 
   /**
@@ -35,9 +36,9 @@ class ApiServiceFunc {
    * @param {*} params 
    */
   httpByMethod(method, url, token = false, params = {}) {
-    var httpOptions = {
+    let httpOptions = {
       method: method,
-      url: url,
+      url: this.API_URL + url,
       headers: {
         // 'Content-Type': 'application/x-www-form-urlencoded'
         'Content-Type': 'application/json'
@@ -60,7 +61,7 @@ class ApiServiceFunc {
 }
 
 const ApiService = {
-  selector: 'apiService',
+  selector: 'ApiService',
   service: ApiServiceFunc
 };
 

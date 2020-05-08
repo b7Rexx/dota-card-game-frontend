@@ -1,13 +1,19 @@
 class UserServiceFunc {
-  constructor(apiService, API_URL) {
+  constructor(ApiService, AuthService) {
     'ngInject';
-    this.API_URL = API_URL;
-    this.apiService = apiService;
+    this.apiService = ApiService;
+    this.authService = AuthService;
   }
 
 
   getData() {
-    return this.apiService.requestWithToken('GET', this.API_URL + '/users');
+    return this.apiService.requestWithToken('GET', '/users');
+  }
+
+  getAuthUser() {
+    let authId = 0;
+    if (this.authService.authUser) authId = this.authService.authUser.id || 0;
+    return this.apiService.requestWithToken('GET', '/users/' + authId);
   }
 
   /**
@@ -17,7 +23,7 @@ class UserServiceFunc {
  * @param {string} password 
  */
   create(name, email, password) {
-    return this.apiService.request('POST', this.API_URL + '/users', {
+    return this.apiService.request('POST', '/users', {
       name: name, email: email, password: password
     });
   }
@@ -30,7 +36,7 @@ class UserServiceFunc {
    * @param {string} password 
    */
   edit(id, name, email) {
-    return this.apiService.requestWithToken('PUT', this.API_URL + '/users/' + id, {
+    return this.apiService.requestWithToken('PUT', '/users/' + id, {
       name: name, email: email
     });
   }
@@ -40,12 +46,12 @@ class UserServiceFunc {
    * @param {number} id 
    */
   remove(id) {
-    return this.apiService.requestWithToken('DELETE', this.API_URL + '/users/' + id);
+    return this.apiService.requestWithToken('DELETE', '/users/' + id);
   }
 }
 
 const UserService = {
-  selector: 'userService',
+  selector: 'UserService',
   service: UserServiceFunc
 };
 

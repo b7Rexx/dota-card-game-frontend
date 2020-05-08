@@ -13,45 +13,48 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="table-list">
-    <table class="table table-responsive table-hover">
-      <thead>
+      <table class="table table-responsive table-hover">
+        <thead>
 
-        <tr>
-          <th ng-repeat="item in $ctrl.listDefn.tableDefn">
-            {{item.thead}}
-          </th>
-        </tr>
+          <tr>
+            <th ng-repeat="item in $ctrl.listDefn.tableDefn">
+              {{item.thead}}
+            </th>
+          </tr>
 
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
 
-        <tr ng-repeat="row in $ctrl.tableData | filter:$ctrl.searchQuery">
-          <td ng-repeat="col in $ctrl.listDefn.tableDefn">
-            <button class="btn btn-sm" ng-if="col.type === 'button'" ng-click="col.action(row)">
-              <i ng-class="col.icon" ng-if='col.icon'></i>{{col.tbody}}
-            </button>
+          <tr
+            ng-repeat="row in ($ctrl.tableData.slice((($ctrl.currentPage-1)*$ctrl.pageSize), (($ctrl.currentPage)*$ctrl.pageSize))) | filter:$ctrl.searchQuery">
+            <td ng-repeat="col in $ctrl.listDefn.tableDefn">
+              <button class="btn btn-sm" ng-if="col.type === 'button'" ng-click="col.action(row)">
+                <i ng-class="col.icon" ng-if='col.icon'></i>{{col.tbody}}
+              </button>
 
-            <span ng-if="col.type === 'string'">
-              {{col.tbody?(row[col.tbody]||''):''}}
-            </span>
+              <span ng-if="col.type === 'string'">
+                {{col.tbody?(row[col.tbody]||''):''}}
+              </span>
 
-            <span ng-if="col.type === 'status'">
-              <i class="fa fa-check text-success" ng-if="row[col.tbody]"></i>
-              <i class="fa fa-times text-danger" ng-if="!row[col.tbody]"></i>
-            </span>
+              <span ng-if="col.type === 'status'">
+                <i class="fa fa-check text-success" ng-if="row[col.tbody]"></i>
+                <i class="fa fa-times text-danger" ng-if="!row[col.tbody]"></i>
+              </span>
 
-            <span ng-if="col.type==='select'">
-              {{row[col.tbody] | optionFilter:col.option}}
-            </span>
+              <span ng-if="col.type==='select'">
+                {{row[col.tbody] | OptionFilter:col.option}}
+              </span>
 
-            <div ng-if="col.type==='image'">
-              <img ng-src="{{col.imageFunc(row)}}" alt="img">
-            </div>
-          </td>
-        </tr>
+              <div ng-if="col.type==='image'">
+                <img ng-src="{{col.imageFunc(row)}}" alt="img">
+              </div>
+            </td>
+          </tr>
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <ul uib-pagination items-per-page="$ctrl.pageSize" total-items="$ctrl.totalItems"
+        ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
     </div>
   </div>
 </div>

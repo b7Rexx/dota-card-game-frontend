@@ -24,11 +24,14 @@
     "angular-ui-bootstrap": "^2.5.6",
     "bootstrap": "^3.3.0",
     "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
     "express": "^4.17.1",
     "ng-file-model": "0.0.5",
     "path": "^0.12.7",
     "sweetalert2": "^9.10.9",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "zingchart": "^2.9.0",
+    "zingchart-angularjs": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

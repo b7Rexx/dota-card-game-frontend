@@ -1,32 +1,35 @@
 class HeroController {
-  constructor($scope, heroService, heroTypeService, heroImageService, swalService, errMessageService) {
+  constructor($scope, HeroService, HeroTypeService, HeroImageService, SwalService, ErrMessageService, ListDefinitionService) {
     'ngInject';
     this.$scope = $scope;
-    this.heroService = heroService;
-    this.heroImageService = heroImageService;
-    this.swalService = swalService;
-    this.errMessageService = errMessageService;
+    this.swalService = SwalService;
+    this.heroService = HeroService;
+    this.heroTypeService = HeroTypeService;
+    this.heroImageService = HeroImageService;
+    this.errMessageService = ErrMessageService;
+    this.listDefinitionService = ListDefinitionService;
+    this.heroType = [];
 
     //get formatted hero types from hero services api
-    heroTypeService.getFormattedHeroType().then(result => {
-      this.heroType = result;
-      this.init();
-    });
+    this.heroTypeService.getFormattedHeroType()
+      .then(result => {
+        this.heroType = result;
+        this.init();
+      });
   }
 
   init() {
-    this.listDefn = {
-      title: 'Hero',
-      tableDefn: [
-        { thead: 'SN', tbody: 'id', type: 'string' },
-        { thead: 'Name', tbody: 'name', type: 'string' },
-        { thead: 'Image', tbody: 'image', type: 'image', imageFunc: this.imageFunc.bind(this) },
-        { thead: 'Hero Type', tbody: 'hero_type_id', type: 'select', option: this.heroType },
-        { thead: 'Status', tbody: 'status', type: 'status' },
-        { thead: 'Edit', tbody: 'edit', icon: 'fa fa-edit', type: 'button', action: this.cbEdit.bind(this) },
-        { thead: 'Delete', tbody: 'delete', icon: 'fa fa-trash', type: 'button', action: this.cbDelete.bind(this) },
+    this.listDefn = this.listDefinitionService.getListDefinition('Hero',
+      [
+        this.listDefinitionService.getTableColumn('SN', 'string', 'id'),
+        this.listDefinitionService.getTableColumn('Name', 'string', 'name'),
+        this.listDefinitionService.getTableColumn('Image', 'image', 'image', { imageFunc: this.imageFunc.bind(this) }),
+        this.listDefinitionService.getTableColumn('Hero Type', 'select', 'hero_type_id', { option: this.heroType }),
+        this.listDefinitionService.getTableColumn('Status', 'status', 'status'),
+        this.listDefinitionService.getTableColumn('Edit', 'button', 'edit', { icon: 'fa fa-edit', action: this.onEdit.bind(this) }),
+        this.listDefinitionService.getTableColumn('Delete', 'button', 'delete', { icon: 'fa fa-trash', action: this.onDelete.bind(this) })
       ]
-    };
+    );
     this.$scope.$apply();
   }
 
@@ -43,12 +46,12 @@ class HeroController {
     });
   }
 
-  cbEdit(item) {
+  onEdit(item) {
     this.openAddModal(item.id, item.name, item.hero_type_id);
   }
 
-  cbDelete(item) {
-    var that = this;
+  onDelete(item) {
+    let that = this;
     this.swalService.confirmWithSwal()
       .then((result) => {
         if (result.value) {
@@ -92,7 +95,7 @@ class HeroController {
   }
 
   modalSave(action, cb) {
-    var that = this;
+    let that = this;
     switch (action) {
       case 'edit':
         this.heroService.edit(this.modalContent.id.value, this.modalContent.name.value, this.modalContent.hero_type_id.value, this.modalContent.image.value)
@@ -100,7 +103,7 @@ class HeroController {
             cb(true);
             that.getHeroData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
             this.modalContent.name.error = errors.validations.name;
             cb(false);
@@ -112,7 +115,7 @@ class HeroController {
             cb(true);
             that.getHeroData();
           }).catch((err) => {
-            var errors = this.errMessageService.parseError(err.data.error);
+            let errors = this.errMessageService.parseError(err.data.error);
             this.modalContent.hero_type_id.error = errors.validations.hero_type_id;
             this.modalContent.name.error = errors.validations.name;
             cb(false);
