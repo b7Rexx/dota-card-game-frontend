@@ -36,6 +36,7 @@ class ApiServiceFunc {
    * @param {*} params 
    */
   httpByMethod(method, url, token = false, params = {}) {
+    console.log(this.API_URL, url);
     let httpOptions = {
       method: method,
       url: this.API_URL + url,

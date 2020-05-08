@@ -14,8 +14,8 @@ import './root.component.scss';
 
 angular
   .module('root', [uiRouter, uiBootstrap, 'ng-file-model', 'zingchart-angularjs'])
-  .constant('API_URL', process.env.NODE_API_URL)
-  .constant('PUBLIC_URL', process.env.NODE_PUBLIC_URL)
+  .constant('API_URL', process.env.API_URL)
+  .constant('PUBLIC_URL', process.env.PUBLIC_URL)
   .constant('Swal', Swal)
 
   .run(function ($state, $transitions, AuthService, $timeout) {
