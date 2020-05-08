@@ -2,7 +2,10 @@ import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import Swal from 'sweetalert2'
-import ngFileModel from 'ng-file-model';
+
+import 'ng-file-model';
+import 'zingchart';
+import 'zingchart-angularjs';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome';
@@ -10,7 +13,7 @@ import '@fortawesome/fontawesome-free-solid';
 import './root.component.scss';
 
 angular
-  .module('root', [uiRouter, uiBootstrap, 'ng-file-model'])
+  .module('root', [uiRouter, uiBootstrap, 'ng-file-model', 'zingchart-angularjs'])
   .constant('API_URL', process.env.NODE_API_URL)
   .constant('PUBLIC_URL', process.env.NODE_PUBLIC_URL)
   .constant('Swal', Swal)
@@ -51,6 +54,7 @@ angular
 
   // components
   .component(AdminHomeComponent.selector, AdminHomeComponent)
+  .component(DashboardComponent.selector, DashboardComponent)
   .component(HeroComponent.selector, HeroComponent)
   .component(UserComponent.selector, UserComponent)
   .component(ListComponent.selector, ListComponent)
@@ -76,6 +80,7 @@ angular
   .service(ErrMessageService.selector, ErrMessageService.service)
   .service(StorageService.selector, StorageService.service)
   .service(ListDefinitionService.selector, ListDefinitionService.service)
+  .service(RecordService.selector, RecordService.service)
 
   //filters
   .filter(OptionFilter.selector, OptionFilter.filter)
@@ -88,13 +93,17 @@ angular
         authenticate: 'requireAuth', isAdmin: true,
         name: 'admin', url: '/admin', component: AdminHomeComponent.selector
       })
-      .state('heroes', {
+      .state('dashboard', {
         authenticate: 'requireAuth', isAdmin: true,
-        name: 'admin.heroes', url: '/heroes', component: HeroComponent.selector, parent: 'admin'
+        name: 'admin.dashboard', url: '/', component: DashboardComponent.selector, parent: 'admin'
       })
       .state('users', {
         authenticate: 'requireAuth', isAdmin: true,
         name: 'admin.users', url: '/users', component: UserComponent.selector, parent: 'admin'
+      })
+      .state('heroes', {
+        authenticate: 'requireAuth', isAdmin: true,
+        name: 'admin.heroes', url: '/heroes', component: HeroComponent.selector, parent: 'admin'
       })
 
       .state('main', {
@@ -103,11 +112,11 @@ angular
       })
       .state('game', {
         authenticate: false, isAdmin: false,
-        name: 'main.game', url: '/', component: GameComponent.selector,parent:'main'
+        name: 'main.game', url: '/', component: GameComponent.selector, parent: 'main'
       })
       .state('profile', {
         authenticate: 'requireAuth', isAdmin: false,
-        name: 'main.profile', url: '/profile', component: ProfileComponent.selector,parent:'main'
+        name: 'main.profile', url: '/profile', component: ProfileComponent.selector, parent: 'main'
       })
       .state('login', {
         authenticate: 'redirectIfAuth',
@@ -130,6 +139,7 @@ angular
   });
 
 import AdminHomeComponent from './admin/components/admin-home.component';
+import DashboardComponent from './admin/components/dashboard.component';
 import HeroComponent from './admin/components/hero.component';
 import UserComponent from './admin/components/user.component';
 import ListComponent from './admin/components/list.component';
@@ -152,5 +162,6 @@ import SwalService from "./services/swal.service";
 import ErrMessageService from "./services/err_message.service";
 import StorageService from "./services/storage.service";
 import ListDefinitionService from "./services/list_definition.service";
+import RecordService from "./services/record.service";
 
 import OptionFilter from "./filters/option.filter";
