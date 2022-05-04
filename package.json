@@ -18,7 +18,7 @@
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@uirouter/angularjs": "^1.0.20",
-    "angular": "^1.7.3",
+    "angular": "^1.8.3",
     "angular-animate": "^1.7.9",
     "angular-touch": "^1.7.9",
     "angular-ui-bootstrap": "^2.5.6",
